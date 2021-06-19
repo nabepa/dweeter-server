@@ -2,11 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import 'express-async-errors';
 import * as userRepository from '../data/auth.js';
-
-// Todo: Make it secure!
-const jwtSecretKey = 'l!ZH0WzdtqWKIH7omNKMXK&rzqU&LS*y';
-const jwtExpiresInDays = '2d';
-const bcryptSaltRounds = 12;
+import { config } from '../../config.js';
 
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
@@ -14,7 +10,7 @@ export async function signup(req, res) {
   if (found) {
     return res.status(409).json({ message: `${username} already exists` });
   }
-  const hashed = await bcrypt.hash(password, bcryptSaltRounds);
+  const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
   const userId = await userRepository.createUser({
     username,
     password: hashed,
@@ -50,5 +46,7 @@ export async function me(req, res) {
 
 function createJwtToken(id) {
   // id가 유일한 payload -> 가능한 작게 하는 것이 비용적으로 유리
-  return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpiresInDays });
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: config.jwt.expiresInSec,
+  });
 }
