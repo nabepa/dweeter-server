@@ -1,11 +1,11 @@
 import express from 'express';
+import 'express-async-errors';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import 'express-async-errors';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
-import { config } from '../config.js';
+import { config } from './config.js';
 import { initSocket } from './connection/socket.js';
 
 const app = express();
@@ -22,8 +22,8 @@ app.use((req, res, next) => {
   res.sendStatus(404);
 });
 
-app.use((err, req, res, next) => {
-  console.error(err);
+app.use((error, req, res, next) => {
+  console.error(error);
   res.sendStatus(500);
 });
 

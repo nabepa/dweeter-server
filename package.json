@@ -6,10 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app"
+    "start": "nodemon app"
   },
-  "keywords": [],
-  "author": "Nabepa",
+  "author": "nabepa",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",

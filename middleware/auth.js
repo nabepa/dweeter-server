@@ -1,17 +1,17 @@
 import jwt from 'jsonwebtoken';
-import { config } from '../../config.js';
+import { config } from '../config.js';
 import * as userRepository from '../data/auth.js';
 
 const AUTH_ERROR = { message: 'Authentication Error' };
 
 export const isAuth = async (req, res, next) => {
-  const authHeader = req.get('Authorization'); // value of Authorization header
+  // header의 Authorization
+  const authHeader = req.get('Authorization');
   if (!(authHeader && authHeader.startsWith('Bearer '))) {
     return res.status(401).json(AUTH_ERROR);
   }
 
   const token = authHeader.split(' ')[1];
-  // Todo: Make it secure!
   jwt.verify(token, config.jwt.secretKey, async (error, decoded) => {
     if (error) {
       return res.status(401).json(AUTH_ERROR);
@@ -20,7 +20,7 @@ export const isAuth = async (req, res, next) => {
     if (!user) {
       return res.status(401).json(AUTH_ERROR);
     }
-    req.userId = user.id; // add custom data(userId)
+    req.userId = user.id; // req.customData를 등록
     next();
   });
 };

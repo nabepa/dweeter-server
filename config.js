@@ -1,15 +1,14 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-function required(key, defaultValue = undefined) {
-  const value = process.env[key] || defaultValue;
-  // process.env에도 없고, 기본값도 없는 값이면 개발 단계서 잡기
+function required(key, defalutValue = undefined) {
+  const value = process.env[key] || defalutValue;
+  // 존재하지 않는 config인 경우 개발 단계에서 캐치
   if (value == null) {
     throw new Error(`Key ${key} is undefined`);
   }
   return value;
 }
-
 export const config = {
   jwt: {
     secretKey: required('JWT_SECRET'),

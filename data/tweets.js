@@ -1,16 +1,23 @@
 import * as userRepository from './auth.js';
+
 let tweets = [
   {
     id: '1',
-    text: 'Exciting Backend 🙈',
-    createdAt: new Date(),
+    text: 'Funny Backend',
+    createdAt: new Date().toString(),
+    userId: '1',
+  },
+  {
+    id: '2',
+    text: 'Funny Frontend',
+    createdAt: new Date().toString(),
     userId: '1',
   },
 ];
 
 export async function getAll() {
   return Promise.all(
-    // 밑의 코드는 프로미스의 집합을 만들기 때문에, 위에서 Promise.all
+    // tweets.map은 Promise의 배열을 반환하므로 Promise.all 사용
     tweets.map(async (tweet) => {
       const { username, name, url } = await userRepository.findById(
         tweet.userId
@@ -31,7 +38,6 @@ export async function getById(id) {
   if (!found) {
     return null;
   }
-  console.log(found.userId);
   const { username, name, url } = await userRepository.findById(found.userId);
   return { ...found, username, name, url };
 }
@@ -40,7 +46,7 @@ export async function create(text, userId) {
   const tweet = {
     id: Date.now().toString(),
     text,
-    createdAt: new Date(),
+    createdAt: new Date().toString(),
     userId,
   };
   tweets = [tweet, ...tweets];

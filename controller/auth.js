@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import 'express-async-errors';
 import * as userRepository from '../data/auth.js';
-import { config } from '../../config.js';
+import { config } from '../config.js';
 
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
@@ -26,6 +26,7 @@ export async function login(req, res) {
   const { username, password } = req.body;
   const user = await userRepository.findByUsername(username);
   if (!user) {
+    // username와 password 중 누가 틀렸는지 알려주지 않는 것은 보안 목적
     return res.status(401).json({ message: 'Invalid username or password' });
   }
   const isValidPassword = await bcrypt.compare(password, user.password);
@@ -36,17 +37,16 @@ export async function login(req, res) {
   res.status(200).json({ token, username });
 }
 
+function createJwtToken(id) {
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: config.jwt.expiresInSec,
+  });
+}
+
 export async function me(req, res) {
   const user = await userRepository.findById(req.userId);
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
   }
   res.status(200).json({ token: req.token, username: user.username });
-}
-
-function createJwtToken(id) {
-  // id가 유일한 payload -> 가능한 작게 하는 것이 비용적으로 유리
-  return jwt.sign({ id }, config.jwt.secretKey, {
-    expiresIn: config.jwt.expiresInSec,
-  });
 }

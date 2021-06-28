@@ -1,18 +1,20 @@
+// 12345: $2b$12$DGnH5XZHa45Kl..JdMyL2.hPigT0XHUyZds.NaABsDHesdPUhwmXm
 let users = [
   {
     id: '1',
     username: 'bob',
-    password: '$2b$12$QbB6YxZtCKFY/9ZG/vz1Y.QdLCBJPAwPpW4cotL/n/OQ7GgzQxIQy', // 12345
+    password: '$2b$12$DGnH5XZHa45Kl..JdMyL2.hPigT0XHUyZds.NaABsDHesdPUhwmXm',
     name: 'Bob',
     email: 'bob@gmail.com',
     url: 'https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-1.png',
   },
   {
     id: '2',
-    username: 'joy1990',
-    password: '$2b$12$QbB6YxZtCKFY/9ZG/vz1Y.QdLCBJPAwPpW4cotL/n/OQ7GgzQxIQy', // 12345
-    name: 'Joseph',
-    email: 'joyful@gmail.com',
+    username: 'ellie',
+    password: '$2b$12$DGnH5XZHa45Kl..JdMyL2.hPigT0XHUyZds.NaABsDHesdPUhwmXm',
+    name: 'Ellie',
+    email: 'ellie@gmail.com',
+    url: 'https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4-300x300.png',
   },
 ];
 
