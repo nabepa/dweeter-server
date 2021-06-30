@@ -2,3 +2,5 @@ node_modules
 .vscode
 .tweets_practice.js
 .env
+platform.sh
+platform.sh.pub
