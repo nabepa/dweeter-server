@@ -1,15 +1,25 @@
-import MongoDB from 'mongodb';
+import Mongoose from 'mongoose';
 import { config } from '../config.js';
 
-let db;
 export function connectDB() {
-  return MongoDB.MongoClient.connect(config.db.host, {
+  return Mongoose.connect(config.db.host, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }).then((client) => {
-    db = client.db();
+    useFindAndModify: false,
   });
 }
+
+export function useVirtualId(schema) {
+  // mongoDB에서 primary key는 1.이름이 _id 2.ObjectID라는 자료형
+  // _id -> id
+  schema.virtual('id').get(function () {
+    return this._id.toString();
+  });
+  // virtualId가 JSON과 Object에도 포함되게 설정
+  schema.set('toJSON', { virtuals: true });
+  schema.set('toObject', { virtuals: true });
+}
+// TODO(nabepa): Delete bleow
 
 export function getUsers() {
   return db.collection('users');
