@@ -10,6 +10,7 @@ function required(key, defalutValue = undefined) {
   return value;
 }
 export const config = {
+  // 관련있는 키끼리 묶는 것도 좋은 방법
   jwt: {
     secretKey: required('JWT_SECRET'),
     expiresInSec: parseInt(required('JWT_EXPIRES_SEC', 86400)),
